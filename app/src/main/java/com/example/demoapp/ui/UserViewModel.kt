@@ -3,18 +3,16 @@ package com.example.demoapp.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.demoapp.UserList
 import com.example.demoapp.UserList.User
 import com.example.demoapp.data.remote.ReqresApiClient
+import com.example.demoapp.repositories.DataStoreRepository
 import com.example.demoapp.repositories.DefaultUserRepository
-import com.example.demoapp.repositories.UserDataStoreRepository
 import kotlinx.coroutines.launch
 
-class UserViewModel(userDataStoreRepository: UserDataStoreRepository): ViewModel() {
+class UserViewModel(userDataStoreRepository: DataStoreRepository): ViewModel() {
     private val api = ReqresApiClient
     private val userRepository = DefaultUserRepository(userDataStoreRepository,api.reqresApiService)
 
@@ -28,20 +26,19 @@ class UserViewModel(userDataStoreRepository: UserDataStoreRepository): ViewModel
     }
 
     fun fetchAllUsers()= viewModelScope.launch {
-        userRepository.fetchAllUsers()
+        userRepository.fetchAllUsersFromRemote()
     }
 
-    companion object {
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ): T {
-                val application = checkNotNull(extras[APPLICATION_KEY])
-                return UserViewModel(UserDataStoreRepository(application)) as T
+    class UserViewModelFactory(private val userDataStoreRepository: DataStoreRepository) :
+        ViewModelProvider.Factory{
+            override fun <T:ViewModel> create (modelClass: Class<T>):T{
+                if(modelClass.isAssignableFrom((UserViewModel::class.java))){
+                    @Suppress("UNCHECKED_CAST")
+                    return UserViewModel(userDataStoreRepository) as T
+                }
+                throw IllegalArgumentException("UNKNOWN VIEW MODEL CLASS")
             }
         }
-    }
+
 
 }

@@ -12,5 +12,5 @@ interface UserRepository {
 
     fun observeAllUsers(): Flow<UserList>
 
-    suspend fun fetchAllUsers()
+    suspend fun fetchAllUsersFromRemote()
 }

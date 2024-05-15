@@ -2,25 +2,19 @@ package com.example.demoapp.repositories
 
 import android.content.Context
 import android.util.Log
-import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
-import androidx.datastore.dataStore
 import com.example.demoapp.UserList
 import com.example.demoapp.UserList.User
-import com.example.demoapp.data.local.UserListSerializer
 import com.example.demoapp.data.remote.response.UserResponse
-import com.example.demoapp.other.Constants.DATASTORE_FILE_NAME
+import com.example.demoapp.repositories.DataStoreSingleton.dataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 
-class UserDataStoreRepository(private val context: Context): DataStoreRepository {
-    private val Context.dataStore: DataStore<UserList> by dataStore(
-        fileName = DATASTORE_FILE_NAME,
-        serializer = UserListSerializer
-    )
 
+class UserDataStoreRepository(private val context: Context): DataStoreRepository {
+    val dataStore = DataStoreSingleton
     private val userListFlow: Flow<UserList> = context.dataStore.data
         .catch { exception ->
             if (exception is IOException) {

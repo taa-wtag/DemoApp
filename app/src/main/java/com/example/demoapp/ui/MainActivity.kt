@@ -1,22 +1,22 @@
 package com.example.demoapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demoapp.adapters.UserItemAdapter
 import com.example.demoapp.databinding.ActivityMainBinding
+import com.example.demoapp.repositories.UserDataStoreRepository
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val userViewModel: UserViewModel by viewModels{UserViewModel.Factory}
-
-    private lateinit var userRecyclerView: RecyclerView
+    private lateinit var userViewModel: UserViewModel
     private lateinit var userAdapter: UserItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,14 +29,18 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        userRecyclerView = binding.rvUserMain
+        val factory = UserViewModel.UserViewModelFactory(UserDataStoreRepository(this))
+        userViewModel = ViewModelProvider(this,factory).get(UserViewModel::class.java)
 
         subscribeToObservers()
         setupRecyclerView()
 
         binding.fabDownloadMain.setOnClickListener { userViewModel.fetchAllUsers() }
         binding.fabClearMain.setOnClickListener { userViewModel.deleteAllUsers() }
+        binding.fabSwitchMain.setOnClickListener {
+            val intent = Intent(this@MainActivity, SecondActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
