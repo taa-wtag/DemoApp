@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DemoApp</string>
+    <string name="switch_activity_fab">Switch Activity FAB</string>
+    <string name="search_for_images">Search for Images...</string>
+    <string name="clear_data_fab">Clear Data FAB</string>
+    <string name="download_data_fab">Download Data FAB</string>
+    <string name="textview">TextView</string>
+</resources>
