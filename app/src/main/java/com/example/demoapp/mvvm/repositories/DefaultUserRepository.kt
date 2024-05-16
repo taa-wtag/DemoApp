@@ -1,18 +1,19 @@
-package com.example.demoapp.model
+package com.example.demoapp.mvvm.repositories
 
 import com.example.demoapp.UserList
-import com.example.demoapp.contracts.SecondActivityContract
+import com.example.demoapp.UserList.User
 import com.example.demoapp.data.remote.ReqresApi
 import com.example.demoapp.other.Resource
 import com.example.demoapp.other.Status
 import com.example.demoapp.repositories.DataStoreRepository
 import kotlinx.coroutines.flow.Flow
 
-class SecondModel(
+class DefaultUserRepository(
     private val userDataStoreRepository: DataStoreRepository,
     private val reqresApi: ReqresApi
-): SecondActivityContract.Model {
-    override suspend fun deleteUser(user: UserList.User) {
+): UserRepository {
+
+    override suspend fun deleteUser(user: User) {
         userDataStoreRepository.deleteData(user)
     }
 
@@ -39,7 +40,7 @@ class SecondModel(
             Resource.error("Couldn't reach the server. Check your internet connection", null)
         }
 
-        if (result.status== Status.SUCCESS){
+        if (result.status==Status.SUCCESS){
             result.data?.userData?.forEach {
                 userDataStoreRepository.addData(it)
             }

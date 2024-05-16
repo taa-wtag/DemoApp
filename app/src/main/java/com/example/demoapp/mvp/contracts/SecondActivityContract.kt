@@ -1,4 +1,4 @@
-package com.example.demoapp.contracts
+package com.example.demoapp.mvp.contracts
 
 import com.example.demoapp.UserList
 import com.example.demoapp.UserList.User

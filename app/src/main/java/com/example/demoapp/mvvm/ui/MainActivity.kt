@@ -1,4 +1,4 @@
-package com.example.demoapp.ui
+package com.example.demoapp.mvvm.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demoapp.adapters.UserItemAdapter
 import com.example.demoapp.databinding.ActivityMainBinding
+import com.example.demoapp.mvp.ui.SecondActivity
 import com.example.demoapp.repositories.UserDataStoreRepository
 
 class MainActivity : AppCompatActivity() {

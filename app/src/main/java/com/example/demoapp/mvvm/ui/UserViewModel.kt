@@ -1,4 +1,4 @@
-package com.example.demoapp.ui
+package com.example.demoapp.mvvm.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,7 @@ import com.example.demoapp.UserList
 import com.example.demoapp.UserList.User
 import com.example.demoapp.data.remote.ReqresApiClient
 import com.example.demoapp.repositories.DataStoreRepository
-import com.example.demoapp.repositories.DefaultUserRepository
+import com.example.demoapp.mvvm.repositories.DefaultUserRepository
 import kotlinx.coroutines.launch
 
 class UserViewModel(userDataStoreRepository: DataStoreRepository): ViewModel() {

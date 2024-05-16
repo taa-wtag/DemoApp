@@ -1,4 +1,4 @@
-package com.example.demoapp.ui
+package com.example.demoapp.mvp.ui
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -7,11 +7,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.demoapp.contracts.SecondActivityContract
+import com.example.demoapp.mvp.contracts.SecondActivityContract
 import com.example.demoapp.data.remote.ReqresApiClient
 import com.example.demoapp.databinding.ActivitySecondBinding
-import com.example.demoapp.model.SecondModel
-import com.example.demoapp.presenter.SecondPresenter
+import com.example.demoapp.mvp.model.SecondModel
+import com.example.demoapp.mvp.presenter.SecondPresenter
 import com.example.demoapp.repositories.UserDataStoreRepository
 
 class SecondActivity : AppCompatActivity(), SecondActivityContract.View {

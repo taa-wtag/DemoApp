@@ -1,4 +1,4 @@
-package com.example.demoapp.presenter
+package com.example.demoapp.mvp.presenter
 
 import android.content.Intent
 import androidx.core.content.ContextCompat.startActivity
@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.demoapp.UserList
 import com.example.demoapp.adapters.UserItemAdapter
-import com.example.demoapp.contracts.SecondActivityContract
+import com.example.demoapp.mvp.contracts.SecondActivityContract
 import com.example.demoapp.databinding.ActivitySecondBinding
-import com.example.demoapp.ui.MainActivity
-import com.example.demoapp.ui.SecondActivity
+import com.example.demoapp.mvvm.ui.MainActivity
+import com.example.demoapp.mvp.ui.SecondActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class SecondPresenter (
-    private val model:SecondActivityContract.Model,
+    private val model: SecondActivityContract.Model,
     private val binding: ActivitySecondBinding,
     private val activity: SecondActivity,
     private val itemTouchCallback: ItemTouchHelper.SimpleCallback

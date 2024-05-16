@@ -1,4 +1,4 @@
-package com.example.demoapp.repositories
+package com.example.demoapp.mvvm.repositories
 
 import com.example.demoapp.UserList
 import com.example.demoapp.UserList.User
