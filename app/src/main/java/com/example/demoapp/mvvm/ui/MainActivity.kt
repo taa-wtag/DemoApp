@@ -36,9 +36,9 @@ class MainActivity : AppCompatActivity() {
         subscribeToObservers()
         setupRecyclerView()
 
-        binding.fabDownloadMain.setOnClickListener { userViewModel.fetchAllUsers() }
-        binding.fabClearMain.setOnClickListener { userViewModel.deleteAllUsers() }
-        binding.fabSwitchMain.setOnClickListener {
+        binding.floatingActionButtonDownloadMain.setOnClickListener { userViewModel.fetchAllUsers() }
+        binding.floatingActionButtonClearMain.setOnClickListener { userViewModel.deleteAllUsers() }
+        binding.floatingActionButtonSwitchMain.setOnClickListener {
             val intent = Intent(this@MainActivity, SecondActivity::class.java)
             startActivity(intent)
         }
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         userAdapter = UserItemAdapter()
-        binding.rvUserMain.apply {
+        binding.recyclerViewUserMain.apply {
             adapter = userAdapter
             layoutManager = LinearLayoutManager(context)
             ItemTouchHelper(itemTouchCallback).attachToRecyclerView(this)

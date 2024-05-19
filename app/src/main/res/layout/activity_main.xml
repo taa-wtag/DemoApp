@@ -9,7 +9,7 @@
     tools:context=".mvvm.ui.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvUserMain"
+        android:id="@+id/recyclerViewUserMain"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
@@ -20,37 +20,37 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabDownloadMain"
+        android:id="@+id/floatingActionButtonDownloadMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:contentDescription="@string/download_data_fab"
         android:focusable="true"
         app:backgroundTint="#009688"
-        app:layout_constraintBottom_toBottomOf="@+id/fabSwitchMain"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButtonSwitchMain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fabSwitchMain"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButtonSwitchMain"
         app:srcCompat="@android:drawable/stat_sys_download" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabClearMain"
+        android:id="@+id/floatingActionButtonClearMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:contentDescription="@string/clear_data_fab"
         android:focusable="true"
         app:backgroundTint="#009688"
-        app:layout_constraintBottom_toBottomOf="@+id/fabSwitchMain"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButtonSwitchMain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fabSwitchMain"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButtonSwitchMain"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabSwitchMain"
+        android:id="@+id/floatingActionButtonSwitchMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"

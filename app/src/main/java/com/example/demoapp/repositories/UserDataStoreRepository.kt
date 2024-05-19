@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.datastore.core.IOException
 import com.example.demoapp.UserList
 import com.example.demoapp.UserList.User
-import com.example.demoapp.data.remote.response.UserResponse
+import com.example.demoapp.data.remote.response.UserInfo
 import com.example.demoapp.repositories.DataStoreSingleton.dataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -41,8 +41,8 @@ class UserDataStoreRepository(private val context: Context): DataStoreRepository
                 }
             }
 
-            is UserResponse -> {
-                if(!checkIfUserExists(t.id)) {
+            is UserInfo -> {
+                if(!t.id?.let { checkIfUserExists(it) }!!) {
                     context.dataStore.updateData { preferences ->
                         val newUser = User.newBuilder()
                         newUser.setAvatar(t.avatar)

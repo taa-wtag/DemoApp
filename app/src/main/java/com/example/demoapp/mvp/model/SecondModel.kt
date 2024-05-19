@@ -1,8 +1,8 @@
 package com.example.demoapp.mvp.model
 
 import com.example.demoapp.UserList
+import com.example.demoapp.data.remote.UserApiService
 import com.example.demoapp.mvp.contracts.SecondActivityContract
-import com.example.demoapp.data.remote.ReqresApi
 import com.example.demoapp.other.Resource
 import com.example.demoapp.other.Status
 import com.example.demoapp.repositories.DataStoreRepository
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 class SecondModel(
     private val userDataStoreRepository: DataStoreRepository,
-    private val reqresApi: ReqresApi
+    private val userApi: UserApiService
 ): SecondActivityContract.Model {
     override suspend fun deleteUser(user: UserList.User) {
         userDataStoreRepository.deleteData(user)
@@ -26,7 +26,7 @@ class SecondModel(
 
     override suspend fun fetchAllUsersFromRemote() {
         val result = try {
-            val response = reqresApi.getUsersByPage("1")
+            val response = userApi.getUsersByPage("1")
             if (response.isSuccessful) {
 
                 response.body()?.let {

@@ -7,14 +7,14 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.demoapp.UserList
 import com.example.demoapp.UserList.User
-import com.example.demoapp.data.remote.ReqresApiClient
-import com.example.demoapp.repositories.DataStoreRepository
+import com.example.demoapp.data.remote.UserApiClient
 import com.example.demoapp.mvvm.repositories.DefaultUserRepository
+import com.example.demoapp.repositories.DataStoreRepository
 import kotlinx.coroutines.launch
 
 class UserViewModel(userDataStoreRepository: DataStoreRepository): ViewModel() {
-    private val api = ReqresApiClient
-    private val userRepository = DefaultUserRepository(userDataStoreRepository,api.reqresApiService)
+    private val api = UserApiClient
+    private val userRepository = DefaultUserRepository(userDataStoreRepository,api.userApiService)
 
     val userList : LiveData<UserList> = userRepository.observeAllUsers().asLiveData()
     fun deleteUser(user: User) = viewModelScope.launch{

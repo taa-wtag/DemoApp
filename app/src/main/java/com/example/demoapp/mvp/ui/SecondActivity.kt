@@ -7,9 +7,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.demoapp.mvp.contracts.SecondActivityContract
-import com.example.demoapp.data.remote.ReqresApiClient
+import com.example.demoapp.data.remote.UserApiClient
 import com.example.demoapp.databinding.ActivitySecondBinding
+import com.example.demoapp.mvp.contracts.SecondActivityContract
 import com.example.demoapp.mvp.model.SecondModel
 import com.example.demoapp.mvp.presenter.SecondPresenter
 import com.example.demoapp.repositories.UserDataStoreRepository
@@ -30,7 +30,7 @@ class SecondActivity : AppCompatActivity(), SecondActivityContract.View {
             insets
         }
 
-        presenter = SecondPresenter(SecondModel(UserDataStoreRepository(this), ReqresApiClient.reqresApiService), binding, this, itemTouchCallback)
+        presenter = SecondPresenter(SecondModel(UserDataStoreRepository(this), UserApiClient.userApiService), binding, this, itemTouchCallback)
 
     }
 

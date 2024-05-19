@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.demoapp.UserList
 import com.example.demoapp.adapters.UserItemAdapter
-import com.example.demoapp.mvp.contracts.SecondActivityContract
 import com.example.demoapp.databinding.ActivitySecondBinding
-import com.example.demoapp.mvvm.ui.MainActivity
+import com.example.demoapp.mvp.contracts.SecondActivityContract
 import com.example.demoapp.mvp.ui.SecondActivity
+import com.example.demoapp.mvvm.ui.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -28,9 +28,9 @@ class SecondPresenter (
     private var userList: LiveData<UserList> = model.observeAllUsers().asLiveData()
 
     init {
-        binding.fabDownloadSecond.setOnClickListener { getAllUsers() }
-        binding.fabClearSecond.setOnClickListener { deleteAllUsers() }
-        binding.fabSwitchSecond.setOnClickListener {
+        binding.floatingActionButtonDownloadSecond.setOnClickListener { getAllUsers() }
+        binding.floatingActionButtonClearSecond.setOnClickListener { deleteAllUsers() }
+        binding.floatingActionButtonSwitchSecond.setOnClickListener {
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(activity,intent,null)
         }
@@ -73,7 +73,7 @@ class SecondPresenter (
 
     private fun setupRecyclerView() {
         userAdapter = UserItemAdapter()
-        binding.rvUserSecond.apply {
+        binding.recyclerViewUserSecond.apply {
             adapter = userAdapter
             layoutManager = LinearLayoutManager(context)
             ItemTouchHelper(itemTouchCallback).attachToRecyclerView(this)
