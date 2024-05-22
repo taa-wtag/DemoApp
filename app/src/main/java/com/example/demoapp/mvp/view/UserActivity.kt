@@ -9,14 +9,14 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.demoapp.UserList.User
 import com.example.demoapp.databinding.ActivitySecondBinding
-import com.example.demoapp.mvp.presenter.ISecondPresenter
-import com.example.demoapp.mvp.presenter.SecondPresenter
+import com.example.demoapp.mvp.presenter.IUserPresenter
+import com.example.demoapp.mvp.presenter.UserPresenterImpl
 import kotlinx.coroutines.launch
 
-class SecondActivity : AppCompatActivity(), ISecondView {
+class UserActivity : AppCompatActivity(), IUserView {
     private lateinit var binding: ActivitySecondBinding
 
-    private lateinit var presenter: ISecondPresenter
+    private lateinit var presenter: IUserPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class SecondActivity : AppCompatActivity(), ISecondView {
             insets
         }
 
-        presenter = SecondPresenter(this)
+        presenter = UserPresenterImpl(this)
         binding.floatingActionButtonDownloadSecond.setOnClickListener { getAllItems() }
         binding.floatingActionButtonClearSecond.setOnClickListener { deleteAllItems() }
         binding.floatingActionButtonSwitchSecond.setOnClickListener { presenter.openMainActivity() }

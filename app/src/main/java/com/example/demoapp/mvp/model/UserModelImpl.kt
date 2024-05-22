@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 
-class DefaultUserModel(
+class UserModelImpl(
     private val context: Context,
     private val remoteServerEvent: RemoteServerEvent
 ): IUserModel {

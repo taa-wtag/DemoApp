@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.demoapp.UserList
 import com.example.demoapp.adapters.UserItemAdapter
 import com.example.demoapp.data.remote.UserApiClient
-import com.example.demoapp.mvp.model.DefaultUserModel
+import com.example.demoapp.mvp.model.UserModelImpl
 import com.example.demoapp.mvp.model.RemoteServerEvent
-import com.example.demoapp.mvp.view.ISecondView
+import com.example.demoapp.mvp.view.IUserView
 import com.example.demoapp.mvvm.ui.MainActivity
 
-class SecondPresenter (
-    private val view: ISecondView,
-) : ISecondPresenter{
-    private val model = DefaultUserModel(view.getContext(), RemoteServerEvent(UserApiClient.userApiService))
+class UserPresenterImpl (
+    private val view: IUserView,
+) : IUserPresenter{
+    private val model = UserModelImpl(view.getContext(), RemoteServerEvent(UserApiClient.userApiService))
     private var userList: LiveData<UserList> = model.observeAllUsers().asLiveData()
     private lateinit var userAdapter: UserItemAdapter
 

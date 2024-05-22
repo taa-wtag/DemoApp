@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demoapp.adapters.UserItemAdapter
 import com.example.demoapp.databinding.ActivityMainBinding
-import com.example.demoapp.mvp.view.SecondActivity
+import com.example.demoapp.mvp.view.UserActivity
 import com.example.demoapp.mvvm.repositories.UserDataStoreRepository
 
 class MainActivity : AppCompatActivity() {
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         binding.floatingActionButtonDownloadMain.setOnClickListener { userViewModel.fetchAllUsers() }
         binding.floatingActionButtonClearMain.setOnClickListener { userViewModel.deleteAllUsers() }
         binding.floatingActionButtonSwitchMain.setOnClickListener {
-            val intent = Intent(this@MainActivity, SecondActivity::class.java)
+            val intent = Intent(this@MainActivity, UserActivity::class.java)
             startActivity(intent)
         }
 

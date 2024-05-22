@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.demoapp.UserList.User
 import com.example.demoapp.databinding.ActivitySecondBinding
 
-interface ISecondView {
+interface IUserView {
     fun getContext(): Context
     fun getBinding(): ActivitySecondBinding
     fun getActivity(): AppCompatActivity
