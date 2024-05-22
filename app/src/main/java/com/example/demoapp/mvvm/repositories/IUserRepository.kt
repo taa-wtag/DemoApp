@@ -1,10 +1,10 @@
-package com.example.demoapp.repositories
+package com.example.demoapp.mvvm.repositories
 
 import com.example.demoapp.UserList
 import com.example.demoapp.UserList.User
 import kotlinx.coroutines.flow.Flow
 
-interface UserRepository {
+interface IUserRepository {
 
     suspend fun deleteUser(user: User)
 
@@ -12,5 +12,5 @@ interface UserRepository {
 
     fun observeAllUsers(): Flow<UserList>
 
-    suspend fun fetchAllUsers()
+    suspend fun fetchAllUsersFromRemote()
 }

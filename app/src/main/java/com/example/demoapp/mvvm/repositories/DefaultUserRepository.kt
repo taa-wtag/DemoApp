@@ -1,16 +1,16 @@
-package com.example.demoapp.repositories
+package com.example.demoapp.mvvm.repositories
 
 import com.example.demoapp.UserList
 import com.example.demoapp.UserList.User
-import com.example.demoapp.data.remote.ReqresApi
+import com.example.demoapp.data.remote.UserApiService
 import com.example.demoapp.other.Resource
 import com.example.demoapp.other.Status
 import kotlinx.coroutines.flow.Flow
 
 class DefaultUserRepository(
-    private val userDataStoreRepository: DataStoreRepository,
-    private val reqresApi: ReqresApi
-): UserRepository {
+    private val userDataStoreRepository: IDataStoreRepository,
+    private val userApi: UserApiService
+): IUserRepository {
 
     override suspend fun deleteUser(user: User) {
         userDataStoreRepository.deleteData(user)
@@ -24,9 +24,9 @@ class DefaultUserRepository(
         return userDataStoreRepository.getData() as Flow<UserList>
     }
 
-    override suspend fun fetchAllUsers() {
+    override suspend fun fetchAllUsersFromRemote() {
         val result = try {
-            val response = reqresApi.getUsersByPage("1")
+            val response = userApi.getUsersByPage("1")
             if (response.isSuccessful) {
 
                 response.body()?.let {

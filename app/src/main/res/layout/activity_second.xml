@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEFDFB"
-    tools:context=".ui.SecondActivity">
+    tools:context=".mvp.view.UserActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvUserSecond"
+        android:id="@+id/recyclerViewUserSecond"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
@@ -19,50 +19,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/progressBarSecond"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabDownloadSecond"
+        android:id="@+id/floatingActionButtonDownloadSecond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:contentDescription="@string/download_data_fab"
         android:focusable="true"
         app:backgroundTint="#009688"
-        app:layout_constraintBottom_toBottomOf="@+id/fabSwitchSecond"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButtonSwitchSecond"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fabSwitchSecond"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButtonSwitchSecond"
         app:srcCompat="@android:drawable/stat_sys_download" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabClearSecond"
+        android:id="@+id/floatingActionButtonClearSecond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:contentDescription="@string/clear_data_fab"
         android:focusable="true"
         app:backgroundTint="#009688"
-        app:layout_constraintBottom_toBottomOf="@+id/fabSwitchSecond"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButtonSwitchSecond"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fabSwitchSecond"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButtonSwitchSecond"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabSwitchSecond"
+        android:id="@+id/floatingActionButtonSwitchSecond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
