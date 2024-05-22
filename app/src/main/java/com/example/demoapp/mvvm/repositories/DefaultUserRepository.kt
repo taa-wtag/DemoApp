@@ -5,13 +5,12 @@ import com.example.demoapp.UserList.User
 import com.example.demoapp.data.remote.UserApiService
 import com.example.demoapp.other.Resource
 import com.example.demoapp.other.Status
-import com.example.demoapp.repositories.DataStoreRepository
 import kotlinx.coroutines.flow.Flow
 
 class DefaultUserRepository(
-    private val userDataStoreRepository: DataStoreRepository,
+    private val userDataStoreRepository: IDataStoreRepository,
     private val userApi: UserApiService
-): UserRepository {
+): IUserRepository {
 
     override suspend fun deleteUser(user: User) {
         userDataStoreRepository.deleteData(user)

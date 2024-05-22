@@ -1,20 +1,21 @@
-package com.example.demoapp.repositories
+package com.example.demoapp.mvp.model
 
 import android.content.Context
 import android.util.Log
 import androidx.datastore.core.IOException
 import com.example.demoapp.UserList
-import com.example.demoapp.UserList.User
+import com.example.demoapp.data.local.DataStoreSingleton.dataStore
 import com.example.demoapp.data.remote.response.UserInfo
-import com.example.demoapp.repositories.DataStoreSingleton.dataStore
+import com.example.demoapp.other.Status
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 
-
-class UserDataStoreRepository(private val context: Context): DataStoreRepository {
-    val dataStore = DataStoreSingleton
+class DefaultUserModel(
+    private val context: Context,
+    private val remoteServerEvent: RemoteServerEvent
+): IUserModel {
     private val userListFlow: Flow<UserList> = context.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
@@ -24,11 +25,39 @@ class UserDataStoreRepository(private val context: Context): DataStoreRepository
                 throw exception
             }
         }
+    override suspend fun deleteUserFromDatastore(user: UserList.User) {
+            val userIndex = userListFlow.first().usersList.indexOf(user)
+            if(userIndex!=-1) {
+                context.dataStore.updateData { preferences ->
+                    preferences.toBuilder().removeUsers(userIndex).build()
+                }
+            }
+            else throw Exception("No such User exists!")
+    }
 
-    override suspend fun addData(t: Any) {
+    override suspend fun deleteAllUsersFromDatastore() {
+        context.dataStore.updateData { preferences ->
+            preferences.toBuilder().clearUsers().build()
+        }
+    }
+
+    override fun observeAllUsers(): Flow<UserList> {
+        return userListFlow
+    }
+
+    override suspend fun fetchAllUsersFromRemote() {
+        val result = remoteServerEvent.fetchAllUsersFromRemote()
+        if (result.status== Status.SUCCESS){
+            result.data?.userData?.forEach {
+                addData(it)
+            }
+        }
+    }
+
+    private suspend fun addData(t: Any ) {
         when (t) {
-            is User -> {
-                    if(!checkIfUserExists(t.id)) {
+            is UserList.User -> {
+                if(!checkIfUserExists(t.id)) {
                     context.dataStore.updateData { preferences ->
                         preferences.toBuilder().addUsers(t).build()
                     }
@@ -44,7 +73,7 @@ class UserDataStoreRepository(private val context: Context): DataStoreRepository
             is UserInfo -> {
                 if(!t.id?.let { checkIfUserExists(it) }!!) {
                     context.dataStore.updateData { preferences ->
-                        val newUser = User.newBuilder()
+                        val newUser = UserList.User.newBuilder()
                         newUser.setAvatar(t.avatar)
                         newUser.setEmail(t.email)
                         newUser.setId(t.id)
@@ -58,30 +87,6 @@ class UserDataStoreRepository(private val context: Context): DataStoreRepository
             else -> throw Exception("Invalid type argument!")
         }
     }
-
-    override suspend fun deleteData(t: Any) {
-        if(t is User) {
-            val userIndex = userListFlow.first().usersList.indexOf(t)
-            if(userIndex!=-1) {
-                context.dataStore.updateData { preferences ->
-                    preferences.toBuilder().removeUsers(userIndex).build()
-                }
-            }
-            else throw Exception("No such User exists!")
-        }
-        else throw Exception("Invalid type argument!")
-    }
-
-    override suspend fun deleteAllData() {
-        context.dataStore.updateData { preferences ->
-            preferences.toBuilder().clearUsers().build()
-        }
-    }
-
-    override fun getData(): Flow<Any> {
-        return userListFlow
-    }
-
     private suspend fun checkIfUserExists(id: Int): Boolean{
         val user = userListFlow.firstOrNull()?.usersList?.find {
             it.id == id

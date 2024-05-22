@@ -6,78 +6,75 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.demoapp.UserList
 import com.example.demoapp.adapters.UserItemAdapter
-import com.example.demoapp.databinding.ActivitySecondBinding
-import com.example.demoapp.mvp.contracts.SecondActivityContract
-import com.example.demoapp.mvp.ui.SecondActivity
+import com.example.demoapp.data.remote.UserApiClient
+import com.example.demoapp.mvp.model.DefaultUserModel
+import com.example.demoapp.mvp.model.RemoteServerEvent
+import com.example.demoapp.mvp.view.ISecondView
 import com.example.demoapp.mvvm.ui.MainActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 
 class SecondPresenter (
-    private val model: SecondActivityContract.Model,
-    private val binding: ActivitySecondBinding,
-    private val activity: SecondActivity,
-    private val itemTouchCallback: ItemTouchHelper.SimpleCallback
-) : SecondActivityContract.Presenter , SecondActivityContract.Model.OnFinishListener{
-    private val scope = CoroutineScope(Dispatchers.IO)
-    lateinit var userAdapter: UserItemAdapter
+    private val view: ISecondView,
+) : ISecondPresenter{
+    private val model = DefaultUserModel(view.getContext(), RemoteServerEvent(UserApiClient.userApiService))
     private var userList: LiveData<UserList> = model.observeAllUsers().asLiveData()
+    private lateinit var userAdapter: UserItemAdapter
 
     init {
-        binding.floatingActionButtonDownloadSecond.setOnClickListener { getAllUsers() }
-        binding.floatingActionButtonClearSecond.setOnClickListener { deleteAllUsers() }
-        binding.floatingActionButtonSwitchSecond.setOnClickListener {
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(activity,intent,null)
-        }
-
         subscribeToObservers()
         setupRecyclerView()
     }
-    override fun getAllUsers() {
-        scope.launch{ model.fetchAllUsersFromRemote() }
+    override suspend fun getAllUsers() {
+        model.fetchAllUsersFromRemote()
     }
 
-    override fun deleteUser(user: UserList.User) {
-        scope.launch { model.deleteUser(user) }
+    override suspend fun deleteUser(user: UserList.User) {
+        model.deleteUserFromDatastore(user)
     }
 
-    override fun deleteAllUsers() {
-        scope.launch { model.deleteAllUsers() }
+    override suspend fun deleteAllUsers() {
+        model.deleteAllUsersFromDatastore()
+    }
+
+    override fun openMainActivity() {
+        val intent = Intent(view.getActivity(), MainActivity::class.java)
+        startActivity(view.getActivity(),intent,null)
     }
 
     override fun onDestroy() {
-        scope.cancel()
     }
-
-    override fun onLoading() {
-    }
-
-    override fun onError(message: String) {
-    }
-
-    override fun onSuccess(list: UserList) {
-    }
-
 
 
     private fun subscribeToObservers() {
-        userList.observe(activity) {
+        userList.observe(view.getActivity()) {
             userAdapter.userItems = it.usersList
         }
     }
 
     private fun setupRecyclerView() {
         userAdapter = UserItemAdapter()
-        binding.recyclerViewUserSecond.apply {
+        view.getBinding().recyclerViewUserSecond.apply {
             adapter = userAdapter
             layoutManager = LinearLayoutManager(context)
-            ItemTouchHelper(itemTouchCallback).attachToRecyclerView(this)
+            ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(
+                0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            ) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ) = true
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val pos = viewHolder.layoutPosition
+                    val user = userAdapter.userItems[pos]
+                    view.deleteItem(user)
+                }
+            }).attachToRecyclerView(this)
         }
     }
+
 
 }

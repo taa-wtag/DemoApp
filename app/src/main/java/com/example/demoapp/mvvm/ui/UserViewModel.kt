@@ -9,10 +9,10 @@ import com.example.demoapp.UserList
 import com.example.demoapp.UserList.User
 import com.example.demoapp.data.remote.UserApiClient
 import com.example.demoapp.mvvm.repositories.DefaultUserRepository
-import com.example.demoapp.repositories.DataStoreRepository
+import com.example.demoapp.mvvm.repositories.IDataStoreRepository
 import kotlinx.coroutines.launch
 
-class UserViewModel(userDataStoreRepository: DataStoreRepository): ViewModel() {
+class UserViewModel(userDataStoreRepository: IDataStoreRepository): ViewModel() {
     private val api = UserApiClient
     private val userRepository = DefaultUserRepository(userDataStoreRepository,api.userApiService)
 
@@ -29,7 +29,7 @@ class UserViewModel(userDataStoreRepository: DataStoreRepository): ViewModel() {
         userRepository.fetchAllUsersFromRemote()
     }
 
-    class UserViewModelFactory(private val userDataStoreRepository: DataStoreRepository) :
+    class UserViewModelFactory(private val userDataStoreRepository: IDataStoreRepository) :
         ViewModelProvider.Factory{
             override fun <T:ViewModel> create (modelClass: Class<T>):T{
                 if(modelClass.isAssignableFrom((UserViewModel::class.java))){

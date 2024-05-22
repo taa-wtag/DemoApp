@@ -4,7 +4,7 @@ import com.example.demoapp.UserList
 import com.example.demoapp.UserList.User
 import kotlinx.coroutines.flow.Flow
 
-interface UserRepository {
+interface IUserRepository {
 
     suspend fun deleteUser(user: User)
 

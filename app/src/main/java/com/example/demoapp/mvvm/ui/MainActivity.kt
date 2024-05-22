@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demoapp.adapters.UserItemAdapter
 import com.example.demoapp.databinding.ActivityMainBinding
-import com.example.demoapp.mvp.ui.SecondActivity
-import com.example.demoapp.repositories.UserDataStoreRepository
+import com.example.demoapp.mvp.view.SecondActivity
+import com.example.demoapp.mvvm.repositories.UserDataStoreRepository
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

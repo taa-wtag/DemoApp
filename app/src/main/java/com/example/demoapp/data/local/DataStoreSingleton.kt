@@ -1,10 +1,9 @@
-package com.example.demoapp.repositories
+package com.example.demoapp.data.local
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 import com.example.demoapp.UserList
-import com.example.demoapp.data.local.UserListSerializer
 import com.example.demoapp.other.Constants
 
 object DataStoreSingleton {
